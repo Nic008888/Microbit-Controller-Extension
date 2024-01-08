@@ -1,5 +1,5 @@
 {
-    "name": "fff",
+    "name": "Microbit Extension",
     "description": "",
     "dependencies": {
         "core": "*",
