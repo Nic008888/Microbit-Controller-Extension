@@ -1,22 +1,34 @@
+/******************************************************************
+ * Extension for Chopchop Micro:bit Controller Mobile App. 
+ * App by Nic Bradley and Extension by Rapha Pretorius
+ * Author: Rapha Pretorius
+ * Email: raphapretorius@gmail.com
+******************************************************************/
+
 enum ButtonOption {
-    F, FR, R, DR, D, DL, L, FL,
+   F, FR, R, BR, B, BL, L, FL, 
 }
+
+
 enum SliderOption {
-    S1, S2, S3,
-}
+    SliderX, SliderY, SliderZ, 
+ }
+
 enum LightOption {
-    Light1, Light2, Light3
+    Light1,Light2,Light3
 }
+
 enum LightState {
-    On, Off
+    On,Off
 }
 enum ToggleOption {
-    Toggle1, Toggle2, Toggle3
+    Toggle1,Toggle2,Toggle3
 }
-namespace microbitApp {
 
+//% weight=40 color=#226025 icon="\uf10b" block="Microbit App"
+//% groups=['Buttons', 'Toggles', 'Sliders', 'Lights']
+namespace microbitApp {
     // define global variables
-    // let optionStrings: string[] = ["BF", "BR", "BB", "BL"];
     let optionStrings: string[] = ["BF", "BFR", "BR", "BBR", "BB", "BBL", "BL", "BFL"]
     let optionToggleStrings: string[] = ["T1", "T2", "T3",]
     let optionSliderStrings: string[] = ["SX", "SY", "SZ",]
@@ -68,7 +80,7 @@ namespace microbitApp {
             serial.writeLine("rx2: " + rx2);
         }
     });
-
+    
 
     /**
      * Custom block to handle different button options based on rx1 values.
@@ -104,7 +116,7 @@ namespace microbitApp {
     }
 
 
-
+    
     /**
      * Custom block to handle different toggle options based on rx1 values.
      * @param option - The toggle option to match.
@@ -119,8 +131,8 @@ namespace microbitApp {
             }
         });
     }
-
-    //% group="Toggles"
+   
+     //% group="Toggles"
     //% block="When toggle %option is switched off"
     export function onToggleOffOption(option: ToggleOption, handler: () => void): void {
         basic.forever(function () {
@@ -131,14 +143,14 @@ namespace microbitApp {
     }
 
 
-
+    
     /**
      * Custom block to handle different slider options based on rx1 values.
      * @param option - The slider option to match.
      * @param handler - The code to run when the option is matched.
      */
     //% group="Sliders"
-    //% block="When slider %option is switched changed"
+    //% block="When slider %option value updated"
     export function onSliderOption(option: SliderOption, handler: () => void): void {
         basic.forever(function () {
             if (rx1 == optionSliderStrings[option]) {
@@ -147,25 +159,10 @@ namespace microbitApp {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Get Slider Values.
      */
-
+    
     //% group="Sliders"
     //% block="slider X value"
     export function getSliderX(): number {
@@ -187,7 +184,7 @@ namespace microbitApp {
     * @param light - The light to control.
     * @param state - The state of the light (On or Off).
     */
-    //% group="Set Light Icon"
+    //% group="Lights"
     //% block="Set $light $state"
     export function setLightState(light: LightOption, state: LightState): void {
         let command = "";
@@ -223,11 +220,10 @@ namespace microbitApp {
      * @param toggle - The toggle to check.
      * @returns The current state of the toggle (0 for off, 1 for on).
      */
-    //% group="Toggle State"
+    //% group="Toggle"
     //% block="Get state of $toggle"
     export function getToggleState(toggle: ToggleOption): number {
         let state = 0;
-
         switch (toggle) {
             case ToggleOption.Toggle1:
                 state = stateToggleOne;
